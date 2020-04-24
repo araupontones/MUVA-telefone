@@ -9,7 +9,7 @@ library(haven)
 reference = read_rds("reference.rds")
 
 ##Set parameters -----------------------------------------------------------------------------------
-downloadDir <- "downloads"
+downloadDir <- tempdir()
 
 
 
