@@ -10,7 +10,7 @@ library(shinycssloaders)
 navbarPage("Llamadas telefonicas", id = "nav",
            
            
-           tabPanel("Mapa", heigth="100%",
+           tabPanel("Lista", heigth="100%",
                     
                     tags$head(
                       tags$style(

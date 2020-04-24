@@ -9,7 +9,7 @@ library(haven)
 reference = read_rds("reference.rds")
 
 ##Set parameters -----------------------------------------------------------------------------------
-downloadDir <- tempdir()
+
 
 
 
@@ -22,7 +22,7 @@ user <- "araupontones"  #API user in server
 password <- "Seguridad1" #API password in server 
 ex_type <- "stata" #format of your data
 hq_address <- sprintf("https://%s.mysurvey.solutions", server)
-downloadDir <- "downloads"
+downloadDir <- tempdir()
 
 
 queryInfo <- sprintf("%s/api/v1/questionnaires",hq_address)
