@@ -1,4 +1,6 @@
 library(DT)
+
+
 source("download.R")
 
 
@@ -26,8 +28,8 @@ source("download.R")
                                      
                       ),
                       selection = 'none',
-                      rownames = FALSE
-                      #escape = F,
+                      rownames = FALSE,
+                      escape = F
                       #colnames = c("")
         ) %>%formatStyle(
         'Nome', 'Status',

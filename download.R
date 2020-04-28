@@ -118,8 +118,12 @@ for(var in to_label){
 }
 
 
+
 ligados = qn %>%
-  select(id_number, chamada_status, CHAMADA_concl) %>%
+  mutate(link = paste0('<a href="https://muva.mysurvey.solutions/Interview/Review/',
+                       interview__id,
+                       '" target="_blank">Link</a>')) %>%
+  select(id_number, chamada_status, CHAMADA_concl, link) %>%
   rename(ID = id_number,
          Status = chamada_status)
 
