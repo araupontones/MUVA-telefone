@@ -25,6 +25,15 @@ hq_address <- sprintf("https://%s.mysurvey.solutions", server)
 downloadDir <- tempdir()
 
 
+
+#Extract key variables of the quesionnaire
+
+QuestionnaireId = "dd315878-fa0c-4750-880c-e5ffc3048a8c"
+qn_id = "dd315878fa0c4750880ce5ffc3048a8c$2"
+Version = "2"
+Title = "FOLLOW  UP LINK"
+Variable = "follow_up_link"
+
 queryInfo <- sprintf("%s/api/v1/questionnaires",hq_address)
 InfoServer <-  InfoServer <- GET(queryInfo, authenticate(user, password),
                                  query = list(limit = 200, offset = 4)) #successful
@@ -39,13 +48,7 @@ ListOfQn.df <- as.data.frame(qnrList$Questionnaires)
 
 #download data
 
-#Extract key variables of the quesionnaire
 
-QuestionnaireId = "dd315878-fa0c-4750-880c-e5ffc3048a8c"
-qn_id = "dd315878fa0c4750880ce5ffc3048a8c$1"
-Version = "1"
-Title = "FOLLOW  UP LINK"
-Variable = "follow_up_link"
 
 Pattern = paste(Variable, Version, sep = "_")
 #create name of the zip file using the name of the questionnaire, version, and download file (this is espcified in the parameters)
@@ -87,25 +90,30 @@ close(filecon)
 #unzip
 
 
-
 #unizp questionnaires
-tounzip = file.path(downloadDir,"follow_up_link_1.zip")
+#tounzip = file.path(downloadDir,"follow_up_link_2.zip")
 
-unzip(zipfile=tounzip, list = FALSE, overwrite = TRUE,
-      junkpaths = FALSE, exdir = downloadDir, unzip = "internal",
-      setTimes = FALSE)
+
+unzip(zipfile=zipfile, overwrite = TRUE, 
+      exdir = exdir, 
+      unzip = "internal"
+     )
+
+
 
 junk <- dir(path=downloadDir, pattern=".zip|.do|Pdf") # ?dir
 file.remove(paste(downloadDir,junk, sep = "\\")) # ?file.remove
 
+list.files(downloadDir)
 
+names(qn)
 ##read data -----------------------------------------------------------------------
 
 #main questionnaire
-file = file.path(downloadDir,"follow_up_link.dta")
+file = file.path(downloadDir,Pattern,"follow_up_link.dta")
 qn = read_dta(file) 
 
-to_label = c("chamada_status", "Nome", "id_number")
+to_label = c("chamada_status", "Nome", "id_number", "name_entrevistador")
 
 for(var in to_label){
   a=  attributes(qn[[var]])
@@ -123,11 +131,13 @@ ligados = qn %>%
   mutate(link = paste0('<a href="https://muva.mysurvey.solutions/Interview/Review/',
                        interview__id,
                        '" target="_blank">Link</a>')) %>%
-  select(id_number, chamada_status, CHAMADA_concl, link) %>%
-  rename(ID = id_number,
+  select(Nome, chamada_status,name_entrevistador, CHAMADA_concl,Hora, link) %>%
+  rename(
          Status = chamada_status)
 
+#id_number
+#ID = Nome,
 
-tabla = left_join(reference, ligados, by="ID")
+tabla = full_join(reference, ligados, by="Nome")
 
 

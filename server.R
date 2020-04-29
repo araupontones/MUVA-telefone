@@ -36,9 +36,15 @@ source("download.R")
         backgroundColor = styleEqual(c("O QUESTIONÁRIO FOI CONCLUIDO COM SUCESSO",
                                        "A CHAMADA FOI INTERROMPIDA ANTES DE CONCLUIR O QUESTIONÁRIO",
                                        "@ PARTICIPANTE NAO ATENDEU A CHAMADA", 
+                                       "@S NUMEROS DO PARTICIPANTE NAO CHAMAM",
                                        "@ PARTICIPANTE SE RECUSA DE FALAR COM A NOSSA EQUIPA",
-                                       "@S NUMEROS DO PARTICIPANTE NAO CHAMAM"),  
-                                     c('#88d8b0', '#ffeead', '#ffeead', '#FF6F69','#FF6F69')))         
+                                       "NO FINAL DO PROCESSO NAO CONSEGUIMOS ENTREVISTAR @ PARTICIPANTE"),  
+                                     c('#88d8b0', #green
+                                       '#ffeead', 
+                                       '#ffeead', #amarelo 
+                                       '#ffeead', #rojo
+                                       '#FF6F69',
+                                       "#FF6F69")))         
         
       
       })
