@@ -1,14 +1,14 @@
 library(DT)
 
 
-source("download.R")
+
 
 
 
   
   
   server <- function(input, output, session) {
-   
+    source("download.R")
     
     output$table <- DT::renderDT({ 
       ##exampe of reactivness (dentro de table)
