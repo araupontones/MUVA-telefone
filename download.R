@@ -101,16 +101,19 @@ unzip(zipfile=zipfile, overwrite = TRUE,
 
 
 
+
 junk <- dir(path=downloadDir, pattern=".zip|.do|Pdf") # ?dir
 file.remove(paste(downloadDir,junk, sep = "\\")) # ?file.remove
 
-list.files(downloadDir)
 
-names(qn)
 ##read data -----------------------------------------------------------------------
 
 #main questionnaire
-file = file.path(downloadDir,Pattern,"follow_up_link.dta")
+file = file.path(exdir,"follow_up_link.dta")
+
+
+
+
 qn = read_dta(file) 
 
 to_label = c("chamada_status", "Nome", "id_number", "name_entrevistador")
