@@ -29,8 +29,8 @@ downloadDir <- tempdir()
 #Extract key variables of the quesionnaire
 
 QuestionnaireId = "dd315878-fa0c-4750-880c-e5ffc3048a8c"
-qn_id = "dd315878fa0c4750880ce5ffc3048a8c$2"
-Version = "2"
+qn_id = "dd315878fa0c4750880ce5ffc3048a8c$4"
+Version = "4"
 Title = "FOLLOW  UP LINK"
 Variable = "follow_up_link"
 
@@ -131,13 +131,14 @@ ligados = qn %>%
   mutate(link = paste0('<a href="https://muva.mysurvey.solutions/Interview/Review/',
                        interview__id,
                        '" target="_blank">Link</a>')) %>%
-  select(Nome, chamada_status,name_entrevistador, CHAMADA_concl,Hora, link) %>%
-  rename(
+  select(id_number, chamada_status,name_entrevistador, CHAMADA_concl,Hora, link) %>%
+  rename(ID = id_number,
          Status = chamada_status)
 
-#id_number
-#ID = Nome,
 
-tabla = full_join(reference, ligados, by="Nome")
+#
+
+tabla = full_join(reference, ligados, by="ID") %>%
+  select(ID, Nome, Status,name_entrevistador, CHAMADA_concl,Hora, link) 
 
 
