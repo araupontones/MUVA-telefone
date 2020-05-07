@@ -29,9 +29,9 @@ downloadDir <- tempdir()
 #Extract key variables of the quesionnaire
 
 QuestionnaireId = "47ce4f97-da53-425f-8117-2cf9c9db05dc"
-qn_id = "47ce4f97da53425f81172cf9c9db05dc$1"
-Version = "1"
-Title = "Assistentes_Ciclo2_followTraining"
+qn_id = "47ce4f97da53425f81172cf9c9db05dc$3"
+Version = "3"
+Title = "assist_ciclo2_follow"
 Variable = "assist_ciclo2_follow"
 
 queryInfo <- sprintf("%s/api/v1/questionnaires",hq_address)
@@ -110,14 +110,17 @@ file.remove(paste(downloadDir,junk, sep = "\\")) # ?file.remove
 
 
 #main questionnaire
-file = file.path(exdir,"assist_ciclo2_follow.dta")
+file = file.path(exdir,paste0(Title,".dta"))
 
 
+list.files(exdir)
 
 
 qn = read_dta(file) 
 
-to_label = c("chamada_status", "nome", "idnumber_bl", "entrevistador")
+names(qn)
+to_label = c("chamada_status", "nome", "idnumber_bl", "entrevistador",
+             "interview__status")
 
 for(var in to_label){
   a=  attributes(qn[[var]])
@@ -132,16 +135,17 @@ for(var in to_label){
 
 
 ligados = qn %>%
+  rename(Server = interview__status) %>%
   mutate(link = paste0('<a href="https://muva.mysurvey.solutions/Interview/Review/',
                        interview__id,
                        '" target="_blank">Link</a>')) %>%
-  select(idnumber_bl, chamada_status,entrevistador, CHAMADA_concl, link) %>%
+  select(idnumber_bl, chamada_status,entrevistador, CHAMADA_concl, Hora, has__errors, Server, link) %>%
   rename(Status = chamada_status)
 
 
 #
 
 tabla = full_join(reference, ligados, by="idnumber_bl") %>%
-  select(idnumber_bl, nome, phone_1, Status,entrevistador, CHAMADA_concl, link) 
+  select(idnumber_bl, nome, phone_1, Status,entrevistador, CHAMADA_concl,Hora, has__errors,Server ,link) 
 
 

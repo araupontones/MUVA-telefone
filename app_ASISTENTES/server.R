@@ -14,7 +14,7 @@ library(DT)
       ##exampe of reactivness (dentro de table)
       
         DT::datatable(tabla,
-                      options = list(pageLength = 25,
+                      options = list(pageLength = 200,
                                      #LengthChange = F,
                                      #columnDefs = list(list(orderable=F, targets=c(0))),
                                      # dom = 't',
@@ -43,9 +43,15 @@ library(DT)
                                      c('#88d8b0', #green
                                        '#ffeead', 
                                        '#ffeead', #amarelo 
-                                       '#ffeead', #rojo
-                                       '#FF6F69',
-                                       "#FF6F69")))         
+                                       '#ffeead', 
+                                       '#FF6F69',#rojo
+                                       "#FF6F69"))) %>%
+        formatStyle(
+          'has__errors',
+          backgroundColor = styleInterval(
+            c(0, Inf), c(NA, "#FF6F69","#FF6F69")
+            )
+        )
         
       
       })
